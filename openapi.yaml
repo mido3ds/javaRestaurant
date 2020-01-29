@@ -167,6 +167,39 @@ paths:
   # MEAL
   /meal: # TODO
     get:
+      tags:
+        - meal
+      summary: Get meal by {meal name + restaurant name} or {meal id}
+      operationId: getMeal
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Meal"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Meal"
+        "404":
+          description: Meal not found
+          content: {}
     post:
     put:
     delete:
