@@ -201,6 +201,29 @@ paths:
           description: Meal not found
           content: {}
     post:
+      tags:
+        - meal
+      summary: Create meal
+      description: Should only be carried by restaurant owner, and be logged in
+      operationId: createMeal
+      requestBody:
+        description: Created meal object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Meal"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: not logged in/ not restaurant owner
+          content: {}
+        "401":
+          description: invalid data
+          content: {}
+      x-codegen-request-body-name: body
     put:
     delete:
   "/meal/order": # TODO
