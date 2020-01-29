@@ -305,8 +305,163 @@ paths:
       x-codegen-request-body-name: body
   "/meal/order": # TODO
     get:
+      tags:
+        - meal
+      summary: Get order by {meal name + restaurant name} or {meal id}
+      operationId: getOrder
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Order"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Order not found
+          content: {}
     post:
+      tags:
+        - meal
+      summary: Create order
+      operationId: createOrder
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+      requestBody:
+        description: Created order object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Meal"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: not logged in/ not restaurant owner
+          content: {}
+        "401":
+          description: invalid data
+          content: {}
+      x-codegen-request-body-name: body
+    put:
+      tags:
+        - meal
+      summary: Update meal
+      description: This can only be done by the logged in user. and be a restaurant owner
+      operationId: updateMeal
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+        - name: orderID
+          in: query
+          description: "ID of order to fetch"
+          schema:
+            type: integer
+      requestBody:
+        description: Updated meal object
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Order"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: Invalid meal supplied
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+        "404":
+          description: Meal not found
+          content: {}
+      x-codegen-request-body-name: body
     delete:
+      tags:
+        - meal
+      summary: delete order
+      operationId: deleteOrder
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+        - name: orderID
+          in: query
+          description: "ID of order to delete"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+        "404":
+          description: Meal not found
+          content: {}
+      x-codegen-request-body-name: body
   # CART
   /cart: # TODO
     get:
