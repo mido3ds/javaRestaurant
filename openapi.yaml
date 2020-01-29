@@ -306,7 +306,7 @@ paths:
   "/meal/order":
     get:
       tags:
-        - meal
+        - order
       summary: Get order by {meal name + restaurant name} or {meal id}
       operationId: getOrder
       parameters:
@@ -340,7 +340,7 @@ paths:
           content: {}
     post:
       tags:
-        - meal
+        - order
       summary: Create order
       operationId: createOrder
       parameters:
@@ -379,7 +379,7 @@ paths:
       x-codegen-request-body-name: body
     put:
       tags:
-        - meal
+        - order
       summary: Update meal
       description: This can only be done by the logged in user. and be a restaurant owner
       operationId: updateOrder
@@ -427,7 +427,7 @@ paths:
       x-codegen-request-body-name: body
     delete:
       tags:
-        - meal
+        - order
       summary: delete order
       operationId: deleteOrder
       parameters:
