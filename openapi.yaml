@@ -268,6 +268,41 @@ paths:
           content: {}
       x-codegen-request-body-name: body
     delete:
+      tags:
+        - meal
+      summary: delete meal
+      description: This can only be done by the logged in user. and be a restaurant owner
+      operationId: deleteMeal
+      parameters:
+        - name: mealName
+          in: query
+          description: "The name that needs to be fetched."
+          schema:
+            type: string
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: mealID
+          in: query
+          description: "ID of meal to fetch instead of name"
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: Invalid meal supplied
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+        "404":
+          description: Meal not found
+          content: {}
+      x-codegen-request-body-name: body
   "/meal/order": # TODO
     get:
     post:
