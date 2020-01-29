@@ -382,7 +382,7 @@ paths:
         - meal
       summary: Update meal
       description: This can only be done by the logged in user. and be a restaurant owner
-      operationId: updateMeal
+      operationId: updateOrder
       parameters:
         - name: mealName
           in: query
@@ -530,7 +530,7 @@ paths:
       tags:
         - restaurant
       summary: Get restaurant by name or byid
-      operationId: getMeal
+      operationId: getRestaurant
       parameters:
         - name: restaurantName
           in: query
