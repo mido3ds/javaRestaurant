@@ -165,7 +165,7 @@ paths:
           description: successful operation
           content: {}
   # MEAL
-  /meal: # TODO
+  /meal:
     get:
       tags:
         - meal
@@ -303,7 +303,7 @@ paths:
           description: Meal not found
           content: {}
       x-codegen-request-body-name: body
-  "/meal/order": # TODO
+  "/meal/order":
     get:
       tags:
         - meal
@@ -463,11 +463,67 @@ paths:
           content: {}
       x-codegen-request-body-name: body
   # CART
-  /cart: # TODO
+  /cart:
     get:
+      tags:
+        - cart
+      summary: Get all orders
+      operationId: getCart
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: "#/components/schemas/Order"
+            application/json:
+              schema:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: "#/components/schemas/Order"
+        "400":
+          description: Not Logged in
+          content: {}
     delete:
-  /cart/confirm: # TODO
-    post:
+      tags:
+        - cart
+      summary: empty the cart
+      operationId: deleteCart
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+      x-codegen-request-body-name: body
+  /cart/confirm:
+    get:
+      tags:
+        - cart
+      summary: Confirm the orders
+      description: Should only be carried by restaurant owner, and be logged in
+      operationId: confirmCart
+      parameters:
+        - name: addressID
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: not logged in/ not restaurant owner
+          content: {}
+        "401":
+          description: invalid data
+          content: {}
+      x-codegen-request-body-name: body
   # RESTAURANT
   /restaruant: # TODO
     get:
@@ -502,6 +558,8 @@ components:
     Address:
       type: object
       properties:
+        id:
+          type: integer
         city:
           type: string
         housenumber:
