@@ -525,11 +525,123 @@ paths:
           content: {}
       x-codegen-request-body-name: body
   # RESTAURANT
-  /restaruant: # TODO
+  /restaruant:
     get:
+      tags:
+        - restaurant
+      summary: Get restaurant by name or byid
+      operationId: getMeal
+      parameters:
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: restaurantID
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Restaurant"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Restaurant"
+        "404":
+          description: Restaurant not found
+          content: {}
     post:
+      tags:
+        - restaurant
+      summary: Create restaurant
+      description: Should only be carried by restaurant owner, and be logged in
+      operationId: createRestaurant
+      requestBody:
+        description: Created restaurant object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Restaurant"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: not logged in/ not restaurant owner
+          content: {}
+        "401":
+          description: invalid data
+          content: {}
+      x-codegen-request-body-name: body
     put:
+      tags:
+        - restaurant
+      summary: Update restaurant
+      description: This can only be done by the logged in user. and be a restaurant owner
+      operationId: updateRestaurant
+      parameters:
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: restaurantID
+          in: query
+          schema:
+            type: integer
+      requestBody:
+        description: Updated meal object
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Restaurant"
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "400":
+          description: Invalid Restaurant supplied
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+        "404":
+          description: Restaurant not found
+          content: {}
+      x-codegen-request-body-name: body
     delete:
+      tags:
+        - restaurant
+      summary: delete restaurant
+      description: This can only be done by the logged in user. and be a restaurant owner
+      operationId: deleteRestaurant
+      parameters:
+        - name: restaurantName
+          in: query
+          description: "name of restaurant that serves that meal"
+          schema:
+            type: string
+        - name: restaurantID
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: successful operation
+          content: {}
+        "401":
+          description: Not logged in
+          content: {}
+        "404":
+          description: Restaurant not found
+          content: {}
+      x-codegen-request-body-name: body
 components:
   schemas:
     User:
@@ -554,6 +666,13 @@ components:
           type: string
         username:
           type: string
+        isRestaurantOwner:
+          type: boolean
+        ownedRestaurants:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Restaurant'
       title: User
     Address:
       type: object
@@ -582,6 +701,8 @@ components:
       properties:
         id:
           type: "integer"
+        ownerID:
+          type: integer
         img:
           type: "string"
         meals:
@@ -596,6 +717,8 @@ components:
       properties:
         id:
           type: "integer"
+        restaurantID:
+          type: integer
         img:
           type: "string"
         name:
