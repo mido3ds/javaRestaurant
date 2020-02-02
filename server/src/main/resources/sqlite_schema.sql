@@ -1,61 +1,34 @@
---
--- Table structure for table `Address` generated from model 'Address'
---
-
-CREATE TABLE IF NOT EXISTS `Address` (
-  `id` INT DEFAULT NULL,
-  `city` TEXT DEFAULT NULL,
-  `housenumber` INT DEFAULT NULL,
-  `street` TEXT DEFAULT NULL
+CREATE TABLE IF NOT EXISTS User (
+    email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    firstname TEXT NOT NULL,
+    lastname TEXT NOT NULL,
+    hashedPassword TEXT NOT NULL,
+    phone TEXT UNIQUE NOT NULL
 );
 
---
--- Table structure for table `Meal` generated from model 'Meal'
---
-
-CREATE TABLE IF NOT EXISTS `Meal` (
-  `id` INT DEFAULT NULL,
-  `restaurantID` INT DEFAULT NULL,
-  `img` TEXT DEFAULT NULL,
-  `name` TEXT DEFAULT NULL,
-  `price` TEXT DEFAULT NULL
+CREATE TABLE IF NOT EXISTS Address (
+    userID INT NOT NULL REFERENCES User(ROWID) ON UPDATE CASCADE ON DELETE CASCADE,
+    city TEXT NOT NULL,
+    street TEXT NOT NULL,
+    housenumber INT NOT NULL
 );
 
---
--- Table structure for table `Order` generated from model 'Order'
---
-
-CREATE TABLE IF NOT EXISTS `Order` (
-  `id` INT DEFAULT NULL,
-  `mealID` INT DEFAULT NULL,
-  `numItems` INT DEFAULT NULL
+CREATE TABLE IF NOT EXISTS Restaurant (
+    ownerID INT NOT NULL REFERENCES User(ROWID) ON UPDATE CASCADE ON DELETE CASCADE,
+    img TEXT DEFAULT NULL,
+    name TEXT UNIQUE NOT NULL
 );
 
---
--- Table structure for table `Restaurant` generated from model 'Restaurant'
---
-
-CREATE TABLE IF NOT EXISTS `Restaurant` (
-  `id` INT DEFAULT NULL,
-  `ownerID` INT DEFAULT NULL,
-  `img` TEXT DEFAULT NULL,
-  `meals` JSON DEFAULT NULL,
-  `name` TEXT DEFAULT NULL
+CREATE TABLE IF NOT EXISTS Meal (
+    restaurantID INT NOT NULL REFERENCES Restaurant(ROWID) ON UPDATE CASCADE ON DELETE CASCADE,
+    img TEXT DEFAULT NULL,
+    name TEXT UNIQUE NOT NULL,
+    price REAL NOT NULL
 );
 
---
--- Table structure for table `User` generated from model 'User'
---
-
-CREATE TABLE IF NOT EXISTS `User` (
-  `addresses` JSON DEFAULT NULL,
-  `email` TEXT DEFAULT NULL,
-  `firstname` TEXT DEFAULT NULL,
-  `id` INT DEFAULT NULL,
-  `lastname` TEXT DEFAULT NULL,
-  `password` TEXT DEFAULT NULL,
-  `phone` TEXT DEFAULT NULL,
-  `username` TEXT DEFAULT NULL,
-  `isRestaurantOwner` TINYINT(1) DEFAULT NULL,
-  `ownedRestaurants` JSON DEFAULT NULL
+CREATE TABLE IF NOT EXISTS MealOrder (
+    mealID INT NOT NULL REFERENCES Meal(ROWID) ON UPDATE CASCADE ON DELETE CASCADE,
+    userID INT NOT NULL REFERENCES User(ROWID) ON UPDATE CASCADE ON DELETE CASCADE,
+    numItems INT DEFAULT 1
 );
