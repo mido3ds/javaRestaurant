@@ -32,17 +32,20 @@ public class CartApiController implements CartApi {
 		this.request = request;
 	}
 
+	// TODO: 2/2/20
 	public ResponseEntity<Void> confirmCart(@ApiParam(value = "") @Valid @RequestParam(value = "addressID", required = false) Integer addressID
 	) {
 		String accept = request.getHeader("Accept");
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
+	// TODO: 2/2/20
 	public ResponseEntity<Void> deleteCart() {
 		String accept = request.getHeader("Accept");
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
+	// TODO: 2/2/20
 	public ResponseEntity<List<Order>> getCart() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
