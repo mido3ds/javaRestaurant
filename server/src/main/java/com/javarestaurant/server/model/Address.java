@@ -3,8 +3,11 @@ package com.javarestaurant.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,6 +30,16 @@ public class Address {
 
 	@JsonProperty("userID")
 	private Integer userID = null;
+
+	public static boolean insert(Address address, Integer userID, JdbcTemplate jdbcTemplate) {
+		try {
+			int rows = jdbcTemplate.update("INSERT INTO Address VALUES(?, ?, ?, ?);",
+				new Object[]{userID, address.city, address.street, address.housenumber});
+			return rows == 1;
+		} catch (DataAccessException e) {
+			return false;
+		}
+	}
 
 	public Integer getUserID() {
 		return userID;

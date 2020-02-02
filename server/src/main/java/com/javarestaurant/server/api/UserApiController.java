@@ -1,6 +1,7 @@
 package com.javarestaurant.server.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarestaurant.server.model.Address;
 import com.javarestaurant.server.model.User;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -24,7 +25,6 @@ import java.io.IOException;
 public class UserApiController implements UserApi {
 	private static final Logger log = LoggerFactory.getLogger(UserApiController.class);
 
-	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	private final ObjectMapper objectMapper;
@@ -32,15 +32,26 @@ public class UserApiController implements UserApi {
 	private final HttpServletRequest request;
 
 	@Autowired
-	public UserApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public UserApiController(ObjectMapper objectMapper, HttpServletRequest request, JdbcTemplate jdbcTemplate) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	public ResponseEntity<Void> createUser(@ApiParam(value = "Created user object", required = true) @Valid @RequestBody User body
 	) {
-		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		Integer rowid = User.insert(body, jdbcTemplate);
+		if (rowid != null && rowid <= 0) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		for (Address address : body.getAddresses()) {
+			if (!Address.insert(address, rowid, jdbcTemplate)) {
+				return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			}
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted", required = true) @PathVariable("username") String username
