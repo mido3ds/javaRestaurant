@@ -1,7 +1,11 @@
 package com.javarestaurant.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -318,5 +322,15 @@ public class User {
 			return "null";
 		}
 		return o.toString().replace("\n", "\n    ");
+	}
+
+	static public User getByName(String username, JdbcTemplate jdbcTemplate) {
+		try {
+			return jdbcTemplate.queryForObject("SELECT ROWID,* FROM User WHERE username = ?;",
+				new String[]{username},
+				new UserRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 }

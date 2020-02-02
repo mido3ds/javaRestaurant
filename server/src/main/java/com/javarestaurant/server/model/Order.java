@@ -21,6 +21,17 @@ public class Order {
 	@JsonProperty("numItems")
 	private Integer numItems = null;
 
+	@JsonProperty("userID")
+	private Integer userID = null;
+
+	public Integer getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+
 	public Order id(Integer id) {
 		this.id = id;
 		return this;

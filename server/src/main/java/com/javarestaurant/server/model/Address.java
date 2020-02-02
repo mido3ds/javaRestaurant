@@ -1,5 +1,6 @@
 package com.javarestaurant.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,17 @@ public class Address {
 
 	@JsonProperty("street")
 	private String street = null;
+
+	@JsonProperty("userID")
+	private Integer userID = null;
+
+	public Integer getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
 
 	public Address id(Integer id) {
 		this.id = id;
