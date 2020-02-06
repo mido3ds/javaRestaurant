@@ -111,6 +111,10 @@ public class User {
 		return EmailValidator.getInstance().isValid(email);
 	}
 
+	public static boolean delete(String username, JdbcTemplate jdbcTemplate) {
+		return jdbcTemplate.update("DELETE FROM User WHERE username = ?;", username) == 1;
+	}
+
 	public User addresses(List<Address> addresses) {
 		this.addresses = addresses;
 		return this;
