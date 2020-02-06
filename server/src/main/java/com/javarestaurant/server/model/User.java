@@ -9,9 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,6 +111,40 @@ public class User {
 
 	public static boolean delete(String username, JdbcTemplate jdbcTemplate) {
 		return jdbcTemplate.update("DELETE FROM User WHERE username = ?;", username) == 1;
+	}
+
+	public static boolean update(String username, User user, JdbcTemplate jdbcTemplate) {
+		ArrayList<String> params = new ArrayList<>();
+		ArrayList<Object> values = new ArrayList<>();
+
+		if (user.email != null) {
+			params.add("email = ?");
+			values.add(user.email);
+		}
+		if (user.firstname != null) {
+			params.add("firstname = ?");
+			values.add(user.firstname);
+		}
+		if (user.lastname != null) {
+			params.add("lastname = ?");
+			values.add(user.lastname);
+		}
+		if (user.password != null) {
+			params.add("password = ?");
+			values.add(user.password);
+		}
+		if (user.phone != null) {
+			params.add("phone = ?");
+			values.add(user.phone);
+		}
+		if (user.username != null) {
+			params.add("username = ?");
+			values.add(user.username);
+		}
+		values.add(username);
+
+		return jdbcTemplate.update(String.format("UPDATE User SET %s WHERE username = ?;",
+			String.join(", ", params)), values.toArray()) == 1;
 	}
 
 	public User addresses(List<Address> addresses) {

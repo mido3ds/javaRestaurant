@@ -54,7 +54,6 @@ public class UserApiController implements UserApi {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	// TODO: 2/2/20
 	public ResponseEntity<Void> deleteUser(@ApiParam(value = "The name that needs to be deleted", required = true) @PathVariable("username") String username
 	) {
 		if (!User.delete(username, jdbcTemplate)) {
@@ -78,7 +77,7 @@ public class UserApiController implements UserApi {
 		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	// TODO: 2/2/20
+	// TODO: 2/2/20 add authentication
 	public ResponseEntity<String> loginUser(@NotNull @ApiParam(value = "The user name for login", required = true) @Valid @RequestParam(value = "username", required = true) String username
 		, @NotNull @ApiParam(value = "The password for login in clear text", required = true) @Valid @RequestParam(value = "password", required = true) String password
 	) {
@@ -95,18 +94,19 @@ public class UserApiController implements UserApi {
 		return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	// TODO: 2/2/20
+	// TODO: 2/2/20 add authentication
 	public ResponseEntity<Void> logoutUser() {
 		String accept = request.getHeader("Accept");
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	// TODO: 2/2/20
 	public ResponseEntity<Void> updateUser(@ApiParam(value = "Updated user object", required = true) @Valid @RequestBody User body
 		, @ApiParam(value = "name that need to be updated", required = true) @PathVariable("username") String username
 	) {
-		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		if (!User.update(username, body, jdbcTemplate)) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }
