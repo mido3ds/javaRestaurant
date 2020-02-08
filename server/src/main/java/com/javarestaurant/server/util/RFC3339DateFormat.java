@@ -1,4 +1,4 @@
-package com.javarestaurant.server;
+package com.javarestaurant.server.util;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;

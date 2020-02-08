@@ -50,7 +50,7 @@ public class Application implements CommandLineRunner {
 		}
 	}
 
-	private void createDB() {
+	public void createDB() {
 		log.info("Creating tables");
 
 		try {
@@ -60,8 +60,9 @@ public class Application implements CommandLineRunner {
 		}
 	}
 
-	private void populateDB() {
+	public void populateDB() {
 		log.info("Populating DB with test data");
+
 		try {
 			ScriptUtils.executeSqlScript(jdbcTemplate.getDataSource().getConnection(), populateDBResource);
 		} catch (SQLException e) {

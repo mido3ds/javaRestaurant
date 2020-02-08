@@ -1,20 +1,13 @@
-package com.javarestaurant.server.model;
+package com.javarestaurant.data.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.javarestaurant.server.rowmapper.UserRowMapper;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * User
@@ -53,102 +46,6 @@ public class User {
 	@JsonProperty("ownedRestaurants")
 	@Valid
 	private List<Restaurant> ownedRestaurants = null;
-
-	static public User getByName(String username, JdbcTemplate jdbcTemplate) {
-		try {
-			return jdbcTemplate.queryForObject("SELECT ROWID,* FROM User WHERE username = ?;",
-				new String[]{username},
-				new UserRowMapper());
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * @param user
-	 * @param jdbcTemplate
-	 * @return 0 -> couldn't insert|user exists
-	 * otherwise -> success and thats the ROWID of the inserted item
-	 */
-	static public Integer insert(User user, JdbcTemplate jdbcTemplate) {
-		if (!(isValidEmail(user.email) && isValidUsername(user.username) &&
-			isValidName(user.firstname) && isValidName(user.lastname) &&
-			isValidPhone(user.phone) && isValidPassword(user.password))) {
-			return 0;
-		}
-
-		try {
-			int rows = jdbcTemplate.update("INSERT INTO User VALUES(?, ?, ?, ?, ?, ?);",
-				new Object[]{user.email, user.username, user.firstname, user.lastname, user.password, user.phone});
-
-			if (rows != 1) {
-				return 0;
-			}
-			return getByName(user.username, jdbcTemplate).id;
-		} catch (DataAccessException e) {
-			return null;
-		}
-	}
-
-	private static boolean isValidPassword(String password) {
-		return password != null && password.length() > 10;
-	}
-
-	private static boolean isValidPhone(String phone) {
-		Pattern p = Pattern.compile("^\\+(?:[0-9] ?){6,14}[0-9]$");
-		Matcher m = p.matcher(phone);
-		return (m.find() && m.group().equals(phone));
-	}
-
-	private static boolean isValidName(String name) {
-		return name != null && name.length() > 1;
-	}
-
-	private static boolean isValidUsername(String username) {
-		return username != null && username.length() > 5;
-	}
-
-	private static boolean isValidEmail(String email) {
-		return EmailValidator.getInstance().isValid(email);
-	}
-
-	public static boolean delete(String username, JdbcTemplate jdbcTemplate) {
-		return jdbcTemplate.update("DELETE FROM User WHERE username = ?;", username) == 1;
-	}
-
-	public static boolean update(String username, User user, JdbcTemplate jdbcTemplate) {
-		ArrayList<String> params = new ArrayList<>();
-		ArrayList<Object> values = new ArrayList<>();
-
-		if (user.email != null) {
-			params.add("email = ?");
-			values.add(user.email);
-		}
-		if (user.firstname != null) {
-			params.add("firstname = ?");
-			values.add(user.firstname);
-		}
-		if (user.lastname != null) {
-			params.add("lastname = ?");
-			values.add(user.lastname);
-		}
-		if (user.password != null) {
-			params.add("password = ?");
-			values.add(user.password);
-		}
-		if (user.phone != null) {
-			params.add("phone = ?");
-			values.add(user.phone);
-		}
-		if (user.username != null) {
-			params.add("username = ?");
-			values.add(user.username);
-		}
-		values.add(username);
-
-		return jdbcTemplate.update(String.format("UPDATE User SET %s WHERE username = ?;",
-			String.join(", ", params)), values.toArray()) == 1;
-	}
 
 	public User addresses(List<Address> addresses) {
 		this.addresses = addresses;

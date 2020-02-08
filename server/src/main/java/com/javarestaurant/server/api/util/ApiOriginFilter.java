@@ -1,4 +1,4 @@
-package com.javarestaurant.server.api;
+package com.javarestaurant.server.api.util;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

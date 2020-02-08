@@ -1,4 +1,4 @@
-package com.javarestaurant.server.model;
+package com.javarestaurant.data.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;

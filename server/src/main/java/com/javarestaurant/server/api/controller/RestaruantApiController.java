@@ -1,8 +1,8 @@
-package com.javarestaurant.server.controller;
+package com.javarestaurant.server.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarestaurant.data.model.Restaurant;
 import com.javarestaurant.server.api.RestaruantApi;
-import com.javarestaurant.server.model.Restaurant;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

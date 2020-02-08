@@ -5,7 +5,7 @@
  */
 package com.javarestaurant.server.api;
 
-import com.javarestaurant.server.model.User;
+import com.javarestaurant.data.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

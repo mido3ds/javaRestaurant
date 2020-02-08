@@ -1,4 +1,4 @@
-package com.javarestaurant.server.model;
+package com.javarestaurant.data.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,19 +7,22 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Objects;
 
 /**
- * Order
+ * Address
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-01-29T13:13:37.274Z[GMT]")
-public class Order {
+public class Address {
 	@JsonProperty("id")
 	private Integer id = null;
 
-	@JsonProperty("mealID")
-	private Integer mealID = null;
+	@JsonProperty("city")
+	private String city = null;
 
-	@JsonProperty("numItems")
-	private Integer numItems = null;
+	@JsonProperty("housenumber")
+	private Integer housenumber = null;
+
+	@JsonProperty("street")
+	private String street = null;
 
 	@JsonProperty("userID")
 	private Integer userID = null;
@@ -32,7 +35,7 @@ public class Order {
 		this.userID = userID;
 	}
 
-	public Order id(Integer id) {
+	public Address id(Integer id) {
 		this.id = id;
 		return this;
 	}
@@ -52,44 +55,64 @@ public class Order {
 		this.id = id;
 	}
 
-	public Order mealID(Integer mealID) {
-		this.mealID = mealID;
+	public Address city(String city) {
+		this.city = city;
 		return this;
 	}
 
 	/**
-	 * Get mealID
+	 * Get city
 	 *
-	 * @return mealID
+	 * @return city
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Integer getMealID() {
-		return mealID;
+	public String getCity() {
+		return city;
 	}
 
-	public void setMealID(Integer mealID) {
-		this.mealID = mealID;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public Order numItems(Integer numItems) {
-		this.numItems = numItems;
+	public Address housenumber(Integer housenumber) {
+		this.housenumber = housenumber;
 		return this;
 	}
 
 	/**
-	 * Get numItems
+	 * Get housenumber
 	 *
-	 * @return numItems
+	 * @return housenumber
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Integer getNumItems() {
-		return numItems;
+	public Integer getHousenumber() {
+		return housenumber;
 	}
 
-	public void setNumItems(Integer numItems) {
-		this.numItems = numItems;
+	public void setHousenumber(Integer housenumber) {
+		this.housenumber = housenumber;
+	}
+
+	public Address street(String street) {
+		this.street = street;
+		return this;
+	}
+
+	/**
+	 * Get street
+	 *
+	 * @return street
+	 **/
+	@ApiModelProperty(value = "")
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
 
@@ -101,25 +124,27 @@ public class Order {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Order order = (Order) o;
-		return Objects.equals(this.id, order.id) &&
-			Objects.equals(this.mealID, order.mealID) &&
-			Objects.equals(this.numItems, order.numItems);
+		Address address = (Address) o;
+		return Objects.equals(this.id, address.id) &&
+			Objects.equals(this.city, address.city) &&
+			Objects.equals(this.housenumber, address.housenumber) &&
+			Objects.equals(this.street, address.street);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, mealID, numItems);
+		return Objects.hash(id, city, housenumber, street);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("class Order {\n");
+		sb.append("class Address {\n");
 
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    mealID: ").append(toIndentedString(mealID)).append("\n");
-		sb.append("    numItems: ").append(toIndentedString(numItems)).append("\n");
+		sb.append("    city: ").append(toIndentedString(city)).append("\n");
+		sb.append("    housenumber: ").append(toIndentedString(housenumber)).append("\n");
+		sb.append("    street: ").append(toIndentedString(street)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}
