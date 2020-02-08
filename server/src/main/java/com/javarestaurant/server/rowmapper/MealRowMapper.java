@@ -1,5 +1,6 @@
-package com.javarestaurant.server.model;
+package com.javarestaurant.server.rowmapper;
 
+import com.javarestaurant.server.model.Meal;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class MealRowMapper implements RowMapper<Meal> {
 		meal.setRestaurantID(resultSet.getInt("restaurantID"));
 		meal.setImg(resultSet.getString("img"));
 		meal.setName(resultSet.getString("name"));
-		meal.setPrice(resultSet.getInt("price") +" EGP");
+		meal.setPrice(resultSet.getInt("price") + " EGP");
 
 		return meal;
 	}

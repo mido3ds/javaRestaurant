@@ -1,13 +1,11 @@
 package com.javarestaurant.server.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

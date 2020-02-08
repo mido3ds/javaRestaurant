@@ -1,6 +1,7 @@
-package com.javarestaurant.server.api;
+package com.javarestaurant.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarestaurant.server.api.MealApi;
 import com.javarestaurant.server.model.Meal;
 import com.javarestaurant.server.model.Order;
 import io.swagger.annotations.ApiParam;

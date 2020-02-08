@@ -1,4 +1,4 @@
-package com.javarestaurant.server.api;
+package com.javarestaurant.server.api.exception;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-01-29T13:13:37.274Z[GMT]")
 public class NotFoundException extends ApiException {

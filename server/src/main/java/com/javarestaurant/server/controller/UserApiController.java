@@ -1,6 +1,7 @@
-package com.javarestaurant.server.api;
+package com.javarestaurant.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javarestaurant.server.api.UserApi;
 import com.javarestaurant.server.model.Address;
 import com.javarestaurant.server.model.User;
 import io.swagger.annotations.ApiParam;
@@ -24,12 +25,9 @@ import java.io.IOException;
 @Controller
 public class UserApiController implements UserApi {
 	private static final Logger log = LoggerFactory.getLogger(UserApiController.class);
-
-	private JdbcTemplate jdbcTemplate;
-
 	private final ObjectMapper objectMapper;
-
 	private final HttpServletRequest request;
+	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	public UserApiController(ObjectMapper objectMapper, HttpServletRequest request, JdbcTemplate jdbcTemplate) {

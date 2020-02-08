@@ -1,6 +1,7 @@
 package com.javarestaurant.server.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.javarestaurant.server.rowmapper.UserRowMapper;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.dao.DataAccessException;
@@ -9,7 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

@@ -1,5 +1,6 @@
-package com.javarestaurant.server.model;
+package com.javarestaurant.server.rowmapper;
 
+import com.javarestaurant.server.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
